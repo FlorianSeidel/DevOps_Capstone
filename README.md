@@ -1,3 +1,15 @@
+# Overview
+
+This repository contains
+* a Quarkus example webservices
+* Code for setting up infrastructure
+  - AWS EKS cluster setup using AWS Cloud Formation
+  - Scripts for preparing EKS cluster for GitOps
+* Jenkins pipeline
+* Project plan
+* Documentation
+
+
 # Project Plan
 
 ## Build Pipeline
