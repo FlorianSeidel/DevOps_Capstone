@@ -9,6 +9,8 @@ This repository contains
 * Project plan
 * Documentation
 
+There is a second repository (DevOps_Capstone_Deployment) which
+contains the Flux deployment config.
 
 # Project Plan
 
