@@ -1,17 +1,16 @@
 # Overview
 
 This repository contains
-* a Quarkus example webservices
 * Code for setting up infrastructure
   - Automated Jenkins setup
   - AWS EKS cluster setup using AWS Cloud Formation
   - Scripts for preparing EKS cluster for GitOps
-* Jenkins pipeline
 * Project plan
 * Documentation
 
-There is a second repository (DevOps_Capstone_Deployment) which
-contains the Flux deployment config.
+There are two other repositories 
+* DevOps_Capstone_Deployment:  Contains the Flux deployment config.
+* DevOps_Capstone_Service: Contains the service code
 
 # Project Plan
 
@@ -44,7 +43,7 @@ Clone Project -> Linting -> Build -> Run Unit Tests -> Run Component Tests
 
 #### Required Infrastructure
 
-Build server: EC2 box
+Build server: Runs on K8s cluster. 
 Registry: AWS ECR
 Repository: GitHub repo
 Build server: Jenkins
