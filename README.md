@@ -64,3 +64,8 @@ K8s Cluster: AWS EKS
 Registry: AWS ECR
 Repository for flux deployment config: GitHub repo
 
+# Jenkins setup
+
+- Jenkins is deployed using Helm on K8s
+- Custom Jenkins image is used, see jenkins/Dockerfile
+
