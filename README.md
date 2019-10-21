@@ -8,9 +8,10 @@ This repository contains
 * Project plan
 * Documentation
 
-There are two other repositories 
+There are three other repositories 
 * DevOps_Capstone_Deployment:  Contains the Flux deployment config.
 * DevOps_Capstone_Service: Contains the service code
+* DevOps_Capstone_Pipeline: Contains the Jenkins pipeline setup for the capstone project
 
 # Project Plan
 
