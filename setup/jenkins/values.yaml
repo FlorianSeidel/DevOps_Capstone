@@ -1,0 +1,20 @@
+
+master:
+  image: florianseidel/capstone-jenkins
+  tag: latest
+  serviceType: NodePort
+  installPlugins: [job-dsl,
+                   blueocean,
+                   matrix-auth,
+                   maven-plugin,
+                   kubernetes:1.18.2,
+                   workflow-aggregator:2.6,
+                   credentials-binding:1.19,
+                   git,
+                   workflow-job:2.33]
+  containerEnv:
+      - name: GITHUB_PW
+        valueFrom:
+          secretKeyRef:
+            name: capstone-github-pw-secret
+            key: GITHUB_PW

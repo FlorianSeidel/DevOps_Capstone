@@ -1,6 +1,7 @@
 version: '2'
 services:
   jenkins:
+    image: florianseidel/capstone-jenkins:latest
     build:
       context: .
       dockerfile: Dockerfile

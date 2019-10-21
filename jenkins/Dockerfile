@@ -21,7 +21,7 @@ RUN  /usr/local/bin/install-plugins.sh job-dsl \
 
 # create the seed job which spawns all other jobs
 RUN mkdir -p /usr/share/jenkins/ref/jobs/seed-job
-COPY seedJob.xml /usr/share/jenkins/ref/jobs/seed-job/config.xml
+COPY init-scripts/seedJob.xml /usr/share/jenkins/ref/jobs/seed-job/config.xml
 
 ENV JENKINS_USER admin
 ENV JENKINS_PASS admin
@@ -29,10 +29,8 @@ ENV JENKINS_PASS admin
 # allows to skip Jenkins setup wizard
 ENV JAVA_OPTS -Djenkins.install.runSetupWizard=false
 
-# Jenkins runs all grovy files from init.groovy.d dir
-# use this for creating default admin user
-COPY default-user.groovy /usr/share/jenkins/ref/init.groovy.d/
-COPY disable-script-security.groovy /usr/share/jenkins/ref/init.groovy.d/
-COPY github-credentials.groovy /usr/share/jenkins/ref/init.groovy.d/
+COPY init-scripts/default-user.groovy /usr/share/jenkins/ref/init.groovy.d/
+COPY init-scripts/disable-script-security.groovy /usr/share/jenkins/ref/init.groovy.d/
+#COPY init-scripts/github-credentials.groovy /usr/share/jenkins/ref/init.groovy.d/
 # volume for Jenkins settings
 VOLUME /var/jenkins_home
