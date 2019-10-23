@@ -12,25 +12,25 @@ ENV JENKINS_UC https://updates.jenkins.io
 RUN echo 2.0 > /usr/share/jenkins/ref/jenkins.install.InstallUtil.lastExecVersion
 
 # install jenkins plugins
-RUN  /usr/local/bin/install-plugins.sh job-dsl \
-                                       git \
-                                       workflow-aggregator \
-                                       blueocean \
-                                       matrix-auth \
-                                       maven-plugin
+#RUN  /usr/local/bin/install-plugins.sh job-dsl \
+#                                       git \
+#                                       workflow-aggregator \
+#                                       blueocean \
+#                                       matrix-auth \
+#                                       maven-plugin \
+#                                       configuration-as-code:1.32
 
 # create the seed job which spawns all other jobs
-RUN mkdir -p /usr/share/jenkins/ref/jobs/seed-job
-COPY init-scripts/seedJob.xml /usr/share/jenkins/ref/jobs/seed-job/config.xml
+#RUN mkdir -p /usr/share/jenkins/ref/jobs/seed-job
+#COPY init-scripts/seedJob.xml /usr/share/jenkins/ref/jobs/seed-job/config.xml
 
-ENV JENKINS_USER admin
-ENV JENKINS_PASS admin
+#ENV JENKINS_USER admin
+#ENV JENKINS_PASS admin
 
 # allows to skip Jenkins setup wizard
-ENV JAVA_OPTS -Djenkins.install.runSetupWizard=false
+ENV JAVA_OPTS -Djenkins.install.runSetupWizard=false -Dpermissive-script-security.enabled=true
 
 COPY init-scripts/default-user.groovy /usr/share/jenkins/ref/init.groovy.d/
 COPY init-scripts/disable-script-security.groovy /usr/share/jenkins/ref/init.groovy.d/
-#COPY init-scripts/github-credentials.groovy /usr/share/jenkins/ref/init.groovy.d/
-# volume for Jenkins settings
-VOLUME /var/jenkins_home
+COPY init-scripts/github-credentials.groovy /usr/share/jenkins/ref/init.groovy.d/
+COPY init-scripts/dockerhub-credentials.groovy /usr/share/jenkins/ref/init.groovy.d/
