@@ -3,7 +3,8 @@ master:
   image: jenkins/jenkins
   tag: latest
   imagePullSecretName: regcred
-  serviceType: NodePort
+  serviceType: ClusterIP
+  servicePort: 8080
   installPlugins: [job-dsl,
                    blueocean,
                    matrix-auth,
