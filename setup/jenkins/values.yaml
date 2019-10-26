@@ -1,10 +1,15 @@
-
+agent:
+  envVars:
+    - name: CR_TOKEN
+      valueFrom:
+        secretKeyRef:
+          name: capstone-github-token-secret
+          key: GITHUB_TOKEN
 master:
   image: jenkins/jenkins
   tag: latest
   imagePullSecretName: regcred
   serviceType: ClusterIP
-  servicePort: 8080
   installPlugins: [job-dsl,
                    blueocean,
                    matrix-auth,
@@ -15,7 +20,8 @@ master:
                    permissive-script-security,
                    git,
                    workflow-job:2.33,
-                   configuration-as-code:1.32]
+                   configuration-as-code:1.32,
+                   pipeline-utility-steps]
   containerEnv:
       - name: GITHUB_PW
         valueFrom:
