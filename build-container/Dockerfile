@@ -38,6 +38,7 @@ RUN curl -L https://get.helm.sh/helm-v2.15.1-linux-amd64.tar.gz -o helm.tar.gz &
     rm helm.tar.gz && \
     rm -rf helm
 
+
 #chart releaser
 RUN curl -L https://github.com/helm/chart-releaser/releases/download/v0.2.2/chart-releaser_0.2.2_linux_amd64.tar.gz \
          -o cr.tar.gz && \
@@ -51,5 +52,7 @@ RUN curl -L https://github.com/helm/chart-releaser/releases/download/v0.2.2/char
 
 
 USER jenkins
+
+RUN helm init --client-only
 
 ENTRYPOINT ["jenkins-slave"]
