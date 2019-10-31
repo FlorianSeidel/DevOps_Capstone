@@ -2,55 +2,39 @@ apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 
 metadata:
-  name: basic-cluster
+  name: capstone
   region: eu-central-1
 
-#TODO: Group for master node!
 nodeGroups:
-  - name: capstone-green-workers
-    labels: { role: green-worker }
-    instanceType: t3.small
+  - name: capstone-prod-workers
+    labels: { role: prod-worker }
+    instanceType: t2.micro
     desiredCapacity: 2
+    minSize: 2
+    maxSize: 4
+    volumeSize: 15
+    volumeType: gp2
     privateNetworking: true
-    availabilityZones: ["eu-central-1a","eu-central-1b"]
-    withAddonPolicies:
-      ebs: true
-      albIngress: true
-      autoScaler: true
-  - name: capstone-blue-workers
-    labels: { role: blue-worker }
-    instanceType: t3.small
-    desiredCapacity: 2
-    privateNetworking: true
-    availabilityZones: ["eu-central-1a","eu-central-1b"]
-    withAddonPolicies:
-      ebs: true
-      albIngress: true
-      autoScaler: true
+    availabilityZones: ["eu-central-1a", "eu-central-1b"]
+    iam:
+      withAddonPolicies:
+        ebs: true
+        albIngress: true
+        autoScaler: true
+        cloudWatch: true
   - name: capstone-workers
     labels: { role: worker }
-    instanceType: t3.small
+    instanceType: t2.small
     desiredCapacity: 2
-    privateNetworking: true
-    availabilityZones: ["eu-central-1a","eu-central-1b"]
-    withAddonPolicies:
-      ebs: true
-      albIngress: true
-      autoScaler: true
-  - name: capstone-builder
-    labels: { role: capstone-builder }
-    instanceType: t3.small
-    desiredCapacity: 1
+    minSize: 2
+    maxSize: 4
+    volumeSize: 15
     privateNetworking: true
     availabilityZones: ["eu-central-1a"]
-    withAddonPolicies:
-      imageBuilder: true
-      ebs: true
-  - name: capstone-support
-    labels: { role: capstone-monitoring }
-    instanceType: t3.small
-    desiredCapacity: 1
-    privateNetworking: true
-    availabilityZones: ["eu-central-1a"]
-    withAddonPolicies:
-      ebs: true
+    iam:
+      withAddonPolicies:
+        ebs: true
+        imageBuilder: true
+        albIngress: true
+        autoScaler: true
+        cloudWatch: true
