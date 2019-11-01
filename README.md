@@ -38,11 +38,13 @@ See the DevOps_Capstone_Deployment and DevOps_Capstone_Service repos for more de
 
 ## Big Picture
 
+### Delivery Pipeline
+
+![](BigPicture-Delivery.png)
+
+### EKS Cluster
+
 ## Development Workflow
-
-## Deployment Workflow
-
-## AWS 
 
 # Installation
 

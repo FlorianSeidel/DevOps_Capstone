@@ -1,3 +1,4 @@
 .idea
 **/*secret*.yaml
-.deploy
+.deploytoken.txt
+setup/token.txt
