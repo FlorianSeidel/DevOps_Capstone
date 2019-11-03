@@ -133,6 +133,11 @@ Dockerfile linting using Hadolint container.
 
 ![](deployment-example/6_Lint_DockerFile.png)
 
+Here is an example of a failed linting step.
+
+![](deployment-example/6.1_Failed_Docker_Lint.png)
+
+
 Helm chart linting.
 
 ![](deployment-example/7_Lint_Helm_Chart.png)

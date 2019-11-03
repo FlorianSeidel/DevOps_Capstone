@@ -1,0 +1,20 @@
+There are three repositories.
+Please have a look at README.md of https://github.com/FlorianSeidel/DevOps_Capstone
+for documentation and as an entrypoint.
+
+There is also https://github.com/FlorianSeidel/DevOps_Capstone_Service, which contains a toy service for this project.
+It also contains the Jenkinsfile.
+
+Then there is https://github.com/FlorianSeidel/DevOps_Capstone_Deployment, which contains among other things, the Jenkins
+configuration.
+
+To get a complete overview, please have a look at  README.md of https://github.com/FlorianSeidel/DevOps_Capstone, though.
+The required screenshots are also included at the end of the README.md.
+
+Regarding the requirement to setup AWS EKS using cloudformation.
+I consider using eksctl to fullfil this requirement. It generates cloudformation resources from a configuration file and
+applies them.
+
+The deployment method chosen is blue/green. There is a complete step-by-step walk-through at the end of README.md in
+the DevOps_Capstone project.
+
