@@ -34,13 +34,17 @@ See the DevOps_Capstone_Deployment and DevOps_Capstone_Service repos for more de
 #### Future Plans
 
 - Have a look at security aspects. Currently only the bare minimum has been done.
-- Replace NAT Gateways with NAT instances to safe costs
+- Secure the Tiller deployment
+- Add test automation
+- Replace NAT Gateways with NAT instances to save costs
 - Use Terraform to build the EKS cluster
 - Configure HPA for the Ingress Controller
 - Add a second instance of the Ingress Controller running on a different node
 - Make setup more generic by adding parameters. Currently GitHub and DockerHub accounts are hard-coded.
 - Split Flux deployment config into CI/CD and service deployment
-
+- FaaS on Kubernetes
+- Add additional services
+- Integrate Kafka, MonogDB and Redis
 
 # Architecture 
 
@@ -53,6 +57,137 @@ See the DevOps_Capstone_Deployment and DevOps_Capstone_Service repos for more de
 ### EKS Cluster
 
 ![](Capstone-EKS-Cluster.png)
+
+# Setup
+
+NOTE: This was mainly written for the author of the project. You will not be able to recreate the setup for
+your own GitHub accounts and DockerHub accounts with the unmodified files, because the repositories are hard-coded at the moment.
+After replacing the account information in the setup scripts, it should work, though.
+
+## Build Jenkins Slave
+
+Run ```./setup/jenkins/build-jenkins-slave.sh```. This will push the image to florianseidel/capstone-build-slave:latest.
+
+## EKS Cluster
+
+Run ```./setup/eks/create-eks-cluster.sh```.
+This will create an AWS EKS cluster named "capstone" using the configuration in setup/eks/values.yaml.
+
+## Install Helm
+
+First install the Helm client, then run 
+```./setup/helm/setup_helm.sh ```.
+
+## Setup Flux
+
+Run ```./setup/flux/install_flux.sh eks```, also install the fluxctl client.
+Then ```export FLUX_FORWARD_NAMESPACE=flux```.
+
+The Flux installation needs access to the FlorianSeidel/DevOps_Capstone_Deployment repository.
+Follow the instructions printed during the installation step to give access.
+
+## Grant Jenkins access to GitHub and DockerHub
+
+Clone the DevOps_Capstone_Deployment repository. 
+Run ```./create-jenkins-secrets.sh $gh_user $gh_pass $gh_token $dh_user $dh_pass```.
+Where $*_user and $*_pass are the GitHub and DockerHub credentials. $gh_token is a GitHub access token.
+
+## Create registry credentials for pulling from private DockerHub repositories.
+
+Assuming your docker.config file contains an access token for DockerHub, you can run ```./create-reg-cred.sh```.
+
+
+# Example Blue/Green deployment
+
+The following is an example blue/green deployment. All steps are listed with relevant screenshots.
+
+### Initial State
+- Version 1.1.2 is deployed in namespace capstone-prod-green
+- Version 1.2.0 is deployed in namespcae capstone-prod-blue
+- Ingress routes www.capsone.overcast-blog.cloud to capstone-prod-blue
+
+![](deployment-example/1_InitialState.png)
+
+![](deployment-example/2_IngressInitialState.png)
+
+Desired final state
+- Version 1.2.1 is deployed in namespace capstone-prod-green
+- Version 1.2.0 is deployed in namespcae capstone-prod-blue
+- Ingress routes www.capsone.overcast-blog.cloud to capstone-prod-green
+
+### Master build and deployment
+
+Version is incremented to 1.2.1 on the master branch.
+
+![](deployment-example/3_IncrementPatch.png)
+
+Commit and push to master branch.
+
+![](deployment-example/4_PushToMaster.png)
+
+Master builds commit successfully.
+
+![](deployment-example/5_SuccessfulBuildOfMaster.png)
+
+Dockerfile linting using Hadolint container.
+
+![](deployment-example/6_LintDockerFile.png)
+
+Helm chart linting.
+
+![](deployment-example/7_Lint_Helm_Chart.png)
+
+Build and push docker image.
+
+![](deployment-example/8_BuildAndPushImage.png)
+
+Latest master branch image is automatically deployed by Flux.
+
+![](deployment-example/9_LatestMasterBranchImageDeployed.png)
+
+### Automated deployment of release branch to staging environment
+
+Create release branch.
+
+![](deployment-example/10_CreateReleaseBranch.png)
+
+Successful build of release branch. Docker image with tag 1.2.1 pushed.
+
+![](deployment-example/11_SuccessFullReleaseBuild.png)
+
+Image is deployed to capstone-stag namespace.
+
+![](deployment-example/12_PathVersionDeployedInStagingNamespace.png)
+
+Here is the history of image tags and which are deployed currently.
+
+![](deployment-example/13_ImagesDeployedInStagAndDev.png)
+
+### Blue/Green deployment to production namespace
+
+First, the image tag is updated in the green environment. 
+
+![](deployment-example/15_DeployNewVersionToGreenEnv.png)
+
+Then, the ingress rule is modified to route traffic to the capstone-green namespace.
+
+![](deployment-example/16_SwitchIngressToGreenFile.png)
+
+Finally, after commiting and pushing. The www.capstone.overcast-blog.cloud is routed to the new deployment.
+
+![](deployment-example/17_IngressSwitchedToGreen.png)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
