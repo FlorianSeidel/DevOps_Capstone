@@ -10,10 +10,10 @@ This includes
   and [Helm](https://helm.sh/)
 * Documentation
 
-There are two other repositories 
+There are three other repositories 
 * [DevOps_Capstone_Deployment](https://github.com/FlorianSeidel/DevOps_Capstone_Deployment):  Contains the Flux deployment config
 * [DevOps_Capstone_Service](https://github.com/FlorianSeidel/DevOps_Capstone_Service): Contains a Quarkus toy micro-service and the Jenkins pipeline
-* [DevOps_Capstone_Repo](https://github.com/FlorianSeidel/DevOps_Capstone_Repo): Contains a Quarkus toy micro-service and the Jenkins pipeline
+* [DevOps_Capstone_Repo](https://github.com/FlorianSeidel/DevOps_Capstone_Repo): Helm Repository for the project
 
 
 # Project Overview
@@ -35,9 +35,12 @@ See the DevOps_Capstone_Deployment and DevOps_Capstone_Service repos for more de
 
 - Have a look at security aspects. Currently only the bare minimum has been done.
 - Replace NAT Gateways with NAT instances to safe costs
+- Use Terraform to build the EKS cluster
 - Configure HPA for the Ingress Controller
 - Add a second instance of the Ingress Controller running on a different node
 - Make setup more generic by adding parameters. Currently GitHub and DockerHub accounts are hard-coded.
+- Split Flux deployment config into CI/CD and service deployment
+
 
 # Architecture 
 
@@ -51,7 +54,5 @@ See the DevOps_Capstone_Deployment and DevOps_Capstone_Service repos for more de
 
 ![](Capstone-EKS-Cluster.png)
 
-## Development Workflow
 
-# Installation
 
