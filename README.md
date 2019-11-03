@@ -131,7 +131,7 @@ Master builds commit successfully.
 
 Dockerfile linting using Hadolint container.
 
-![](deployment-example/6_LintDockerFile.png)
+![](deployment-example/6_Lint_DockerFile.png)
 
 Helm chart linting.
 
