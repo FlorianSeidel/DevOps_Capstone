@@ -11,8 +11,10 @@ This includes
 * Documentation
 
 There are two other repositories 
-* DevOps_Capstone_Deployment:  Contains the Flux deployment config
-* DevOps_Capstone_Service: Contains a Quarkus toy micro-service and the Jenkins pipeline
+* [DevOps_Capstone_Deployment](https://github.com/FlorianSeidel/DevOps_Capstone_Deployment):  Contains the Flux deployment config
+* [DevOps_Capstone_Service](https://github.com/FlorianSeidel/DevOps_Capstone_Service): Contains a Quarkus toy micro-service and the Jenkins pipeline
+* [DevOps_Capstone_Repo](https://github.com/FlorianSeidel/DevOps_Capstone_Repo): Contains a Quarkus toy micro-service and the Jenkins pipeline
+
 
 # Project Overview
 
@@ -32,7 +34,10 @@ See the DevOps_Capstone_Deployment and DevOps_Capstone_Service repos for more de
 #### Future Plans
 
 - Have a look at security aspects. Currently only the bare minimum has been done.
-- ...
+- Replace NAT Gateways with NAT instances to safe costs
+- Configure HPA for the Ingress Controller
+- Add a second instance of the Ingress Controller running on a different node
+- Make setup more generic by adding parameters. Currently GitHub and DockerHub accounts are hard-coded.
 
 # Architecture 
 
@@ -43,6 +48,8 @@ See the DevOps_Capstone_Deployment and DevOps_Capstone_Service repos for more de
 ![](BigPicture-Delivery.png)
 
 ### EKS Cluster
+
+![](Capstone-EKS-Cluster.png)
 
 ## Development Workflow
 
