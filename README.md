@@ -20,7 +20,7 @@ There are three other repositories
 
 This is a toy CI/CD setup for delivering code changes into a production environment in an automated way.
 It is based on Jenkins, AWS EKS, eksctl, Helm, Flux, GitHub, DockerHub and Quarkus.
-Infrastructure setup and configuration is mostly automated. This includes the Jenkins configuration and excludes secret generation and authorization steps.
+Infrastructure setup and configuration is completely automated. 
 
 The project contains the following parts:
 - A simple toy micro-service built using the [Quarkus](https://quarkus.io/) framework.
@@ -33,7 +33,7 @@ See the DevOps_Capstone_Deployment and DevOps_Capstone_Service repos for more de
 
 #### Future Plans
 
-- Have a look at security aspects. Currently only the bare minimum has been done.
+- Have a look at security. Currently only the bare minimum has been done.
 - Secure the Tiller deployment
 - Add test automation after deployment
 - Make cluster auto-scaling work
@@ -51,13 +51,11 @@ See the DevOps_Capstone_Deployment and DevOps_Capstone_Service repos for more de
 
 # Architecture 
 
-## Big Picture
-
-### Delivery Pipeline
+## Delivery Pipeline
 
 ![](BigPicture-Delivery.png)
 
-### EKS Cluster
+## EKS Cluster
 
 ![](Capstone-EKS-Cluster.png)
 
