@@ -1,3 +1,30 @@
+Submission 2:
+
+The docker image is built using docker-compose in step "Build Docker Image and Push".
+Jenkinsfile line 114 and following.
+Excerpt:
+  stage('Build Docker Image and Push')
+                    {
+                        echo "Building docker image..."
+                        docker.withRegistry('', 'dockerhub') {
+
+	                        sh "docker-compose build"
+							
+docker-compose.yml:
+
+version: '2'
+services:
+  jenkins:
+    image: florianseidel/capstone-service:latest
+    build:
+      context: .
+      dockerfile: src/main/docker/Dockerfile.jvm
+    ports:
+      - "8889:8080"
+
+The screenshot of the cluster creation using eksctl is included in this zip archive.
+
+Submission 1:
 There are three repositories.
 Please have a look at README.md of https://github.com/FlorianSeidel/DevOps_Capstone
 for documentation and as an entrypoint.

@@ -35,12 +35,15 @@ See the DevOps_Capstone_Deployment and DevOps_Capstone_Service repos for more de
 
 - Have a look at security aspects. Currently only the bare minimum has been done.
 - Secure the Tiller deployment
-- Add test automation
+- Add test automation after deployment
+- Make cluster auto-scaling work
+- Perform security scanning of the Docker containers
 - Replace NAT Gateways with NAT instances to save costs
+- Figure out why the NLB has all nodes in target group
 - Use Terraform to build the EKS cluster
 - Configure HPA for the Ingress Controller
 - Add a second instance of the Ingress Controller running on a different node
-- Make setup more generic by adding parameters. Currently GitHub and DockerHub accounts are hard-coded.
+- ~~Make setup more generic by adding parameters. Currently GitHub and DockerHub accounts are hard-coded.~~
 - Split Flux deployment config into CI/CD and service deployment
 - FaaS on Kubernetes
 - Add additional services
@@ -60,41 +63,10 @@ See the DevOps_Capstone_Deployment and DevOps_Capstone_Service repos for more de
 
 # Setup
 
-NOTE: This was mainly written for the author of the project. You will not be able to recreate the setup for
-your own GitHub accounts and DockerHub accounts with the unmodified files, because the repositories are hard-coded at the moment.
-After replacing the account information in the setup scripts, it should work, though.
-
-## Build Jenkins Slave
-
-Run ```./setup/jenkins/build-jenkins-slave.sh```. This will push the image to florianseidel/capstone-build-slave:latest.
-
-## EKS Cluster
-
-Run ```./setup/eks/create-eks-cluster.sh```.
-This will create an AWS EKS cluster named "capstone" using the configuration in setup/eks/values.yaml.
-
-## Install Helm
-
-First install the Helm client, then run 
-```./setup/helm/setup_helm.sh ```.
-
-## Setup Flux
-
-Run ```./setup/flux/install_flux.sh eks```, also install the fluxctl client.
-Then ```export FLUX_FORWARD_NAMESPACE=flux```.
-
-The Flux installation needs access to the FlorianSeidel/DevOps_Capstone_Deployment repository.
-Follow the instructions printed during the installation step to give access.
-
-## Grant Jenkins access to GitHub and DockerHub
-
-Clone the DevOps_Capstone_Deployment repository. 
-Run ```./create-jenkins-secrets.sh $gh_user $gh_pass $gh_token $dh_user $dh_pass```.
+1. Fork the repository
+2. Run ```./setup/jenkins/build-jenkins-slave.sh $gh_user```. Where $dh_user is your DockerHub account name. This will push the image to $dh_user/capstone-build-slave:latest.
+3. Run ```./setup/configure-eks-cluster.sh $gh_user $gh_pass $gh_token $dh_user $dh_pass```.
 Where $*_user and $*_pass are the GitHub and DockerHub credentials. $gh_token is a GitHub access token.
-
-## Create registry credentials for pulling from private DockerHub repositories.
-
-Assuming your docker.config file contains an access token for DockerHub, you can run ```./create-reg-cred.sh```.
 
 
 # Example Blue/Green deployment
