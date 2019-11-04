@@ -64,7 +64,7 @@ See the DevOps_Capstone_Deployment and DevOps_Capstone_Service repos for more de
 # Setup
 
 1. Fork the repository
-2. Run ```./setup/jenkins/build-jenkins-slave.sh $gh_user```. Where $dh_user is your DockerHub account name. This will push the image to $dh_user/capstone-build-slave:latest.
+2. Run ```./setup/jenkins/build-jenkins-slave.sh $dh_user```. Where $dh_user is your DockerHub account name. This will push the image to $dh_user/capstone-build-slave:latest.
 3. Run ```./setup/configure-eks-cluster.sh $gh_user $gh_pass $gh_token $dh_user $dh_pass```.
 Where $*_user and $*_pass are the GitHub and DockerHub credentials. $gh_token is a GitHub access token.
 
