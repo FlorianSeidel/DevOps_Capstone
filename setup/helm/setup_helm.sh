@@ -1,4 +1,7 @@
 #!/bin/bash
+set -e
+set -u
+set -o xtrace
 
 kubectl -n kube-system create sa tiller
 

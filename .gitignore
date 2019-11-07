@@ -2,3 +2,4 @@
 **/*secret*.yaml
 .deploytoken.txt
 setup/token.txt
+setup/configure-eks-cluster-local.sh

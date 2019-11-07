@@ -1,4 +1,7 @@
 #/bin/bash
+set -e
+set -u
+set -o xtrace
 
 git clone florianseidel/DevOps_Capstone_Repo
 cd DevOps_Capstone_Repo

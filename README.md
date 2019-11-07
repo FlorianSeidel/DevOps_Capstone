@@ -37,6 +37,8 @@ See the DevOps_Capstone_Deployment and DevOps_Capstone_Service repos for more de
 - Secure the Tiller deployment
 - Add test automation after deployment
 - Make cluster auto-scaling work
+- Integrate Jenkins with GitHub OAuth SSO and expose service via URL
+- Use Route53 plugin to create A records automatically. 
 - Perform security scanning of the Docker containers
 - Replace NAT Gateways with NAT instances to save costs
 - Figure out why the NLB has all nodes in target group

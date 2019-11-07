@@ -1,9 +1,27 @@
 #!/bin/bash
+set -e
+set -u
+set -o xtrace
+
 GH_USER=$1
 GH_PASS=$2
 GH_TOKEN=$3
-DH_USER=$4
-DH_PASS=$5
+DEPLOYMENT_REPO=$4
+DH_USER=$5
+DH_PASS=$6
+
+
+#Wait for sealed-secrets container to be running
+echo "Waiting for sealed-secrets pod to be ready..."
+ATTEMPTS=0
+until kubectl wait --for=condition=Ready pod -l app.kubernetes.io/instance=sealed-secrets -n capstone-adm --timeout=120s || [ $ATTEMPTS -eq 60 ]; do
+  ATTEMPTS=$((ATTEMPTS + 1))
+  sleep 1
+done
+
+
+git clone https://github.com/$GH_USER/$DEPLOYMENT_REPO.git deployment
+cd deployment
 
 #Create secrets necessary for jenkins
 kubeseal --fetch-cert \
