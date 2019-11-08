@@ -10,11 +10,10 @@ availabilityZones: ["eu-central-1a", "eu-central-1b"]
 nodeGroups:
   - name: capstone-prod-workers
     labels: { role: prod-worker }
-    instanceType: t2.micro
+    instanceType: t2.small
     desiredCapacity: 2
     minSize: 2
     maxSize: 4
-    maxPodsPerNode: 8
     volumeSize: 15
     volumeType: gp2
     privateNetworking: true
@@ -31,7 +30,23 @@ nodeGroups:
     desiredCapacity: 2
     minSize: 2
     maxSize: 4
-    maxPodsPerNode: 12
+    volumeSize: 15
+    volumeType: gp2
+    privateNetworking: true
+    availabilityZones: ["eu-central-1a", "eu-central-1b"]
+    iam:
+      withAddonPolicies:
+        ebs: true
+        imageBuilder: true
+        albIngress: true
+        autoScaler: true
+        cloudWatch: true
+  - name: capstone-builder
+    labels: { role: builder }
+    instanceType: t2.small
+    desiredCapacity: 1
+    minSize: 1
+    maxSize: 4
     volumeSize: 15
     volumeType: gp2
     privateNetworking: true

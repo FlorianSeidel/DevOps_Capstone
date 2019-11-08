@@ -35,9 +35,17 @@ See the DevOps_Capstone_Deployment and DevOps_Capstone_Service repos for more de
 
 - Have a look at security. Currently only the bare minimum has been done.
 - Secure the Tiller deployment
+- Use spot instances to save cost
 - Add test automation after deployment
 - Make cluster auto-scaling work
-- Integrate Jenkins with GitHub OAuth SSO and expose service via URL
+- Build native image with Quarkus
+- Use Helm Chart repo for release
+- Configure and test HPA for service
+- Add Keycloak for identity managment
+- Integrate Jenkins with Keycloak
+- Integrate Service with Keycloak
+- Use ALB instead of NGINX ingress
+- Use AWS Cognito as identity provider
 - Use Route53 plugin to create A records automatically. 
 - Perform security scanning of the Docker containers
 - Replace NAT Gateways with NAT instances to save costs
