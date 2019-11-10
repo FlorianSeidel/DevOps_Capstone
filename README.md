@@ -40,7 +40,7 @@ See the DevOps_Capstone_Deployment and DevOps_Capstone_Service repos for more de
 - Make cluster auto-scaling work
 - Build native image with Quarkus
 - Use Helm Chart repo for release
-- Configure and test HPA for service
+~~- Configure and test HPA for service~~
 - Add Keycloak for identity managment
 - Integrate Jenkins with Keycloak
 - Integrate Service with Keycloak

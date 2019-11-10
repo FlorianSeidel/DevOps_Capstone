@@ -9,6 +9,9 @@ GH_TOKEN=$3
 DEPLOYMENT_REPO=$4
 DH_USER=$5
 DH_PASS=$6
+AWS_KEY_ID=$7
+AWS_KEY=$8
+CLUSTER_NAME=$9
 
 
 #Wait for sealed-secrets container to be running
@@ -59,12 +62,42 @@ kubeseal --format=yaml \
          > releases/capstone-build/jenkins-secret.yaml
 
 rm jenkins-secret.json
-rm pub-cert.pem
 
 git add releases/capstone-build/jenkins-secret.yaml
-git commit -m "Add Jenkins password secret"
-git push
+git commit -m "Add Jenkins password secret" || true
 
+
+echo -ne "[default]\nregion = eu-central-1" > config
+echo -ne "[default]\naws_access_key_id = ${AWS_KEY_ID}\naws_secret_access_key = ${AWS_KEY}" > credentials
+kubectl create secret generic aws-credentials --from-file=credentials --from-file=config \
+        -n capstone-build \
+        --dry-run \
+        -o json > aws-credentials-secret.json
+rm credentials
+rm config
+kubeseal --format=yaml \
+         --cert=pub-cert.pem \
+         < aws-credentials-secret.json \
+         > releases/capstone-build/aws-credentials-secret.yaml
+rm aws-credentials-secret.json
+
+git add releases/capstone-build/aws-credentials-secret.yaml
+git commit -m "AWS Credentials" || true
+
+git push
+rm pub-cert.pem
+
+# Only here for historical reasons.
+# Tried to use kubetl by configuring aws credentials and kubeconfig before fully understanding RBAC service roles...
+#../flux/./create-kube-config.sh $CLUSTER_NAME
+#kubectl create configmap kube-config --from-file=config \
+#        -n capstone-build \
+#        --dry-run \
+#        -o yaml > releases/capstone-build/kube-config.yaml
+#git add releases/capstone-build/kube-config.yaml
+#git commit -m "Add Kube config" || true
+#git push
+#rm config
 
 kubeseal --fetch-cert \
 --controller-namespace=capstone-adm \
@@ -112,4 +145,4 @@ rm reg-cred.json
 cat releases/capstone-prod-green/reg-cred.yaml
 git add releases/capstone-prod-green/reg-cred.yaml
 
-git commit -a -m "Add docker registry credentials." && git push
+(git commit -a -m "Add docker registry credentials." || true) && git push

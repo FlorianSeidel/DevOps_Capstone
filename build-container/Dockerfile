@@ -38,6 +38,24 @@ RUN curl -L https://get.helm.sh/helm-v2.15.1-linux-amd64.tar.gz -o helm.tar.gz &
     rm helm.tar.gz && \
     rm -rf helm
 
+#kubectl
+RUN curl -L https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl \
+     -o /usr/local/bin/kubectl
+RUN chmod  +x /usr/local/bin/kubectl
+RUN ln -s /usr/local/bin/kubectl /usr/bin/kubectl
+
+#iam authenticator
+RUN curl -L https://amazon-eks.s3-us-west-2.amazonaws.com/1.14.6/2019-08-22/bin/linux/amd64/aws-iam-authenticator \
+    -o /usr/local/bin/aws-iam-authenticator
+RUN chmod  +x /usr/local/bin/aws-iam-authenticator
+RUN ln -s /usr/local/bin/aws-iam-authenticator /usr/bin/aws-iam-authenticator
+
+
+#fluxctl
+RUN curl -L https://github.com/fluxcd/flux/releases/download/1.15.0/fluxctl_linux_amd64 \
+	-o /usr/local/bin/fluxctl
+RUN chmod +x /usr/local/bin/fluxctl
+RUN ln -s /usr/local/bin/fluxctl /usr/bin/fluxctl
 
 #chart releaser
 RUN curl -L https://github.com/helm/chart-releaser/releases/download/v0.2.2/chart-releaser_0.2.2_linux_amd64.tar.gz \

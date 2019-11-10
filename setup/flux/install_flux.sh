@@ -12,6 +12,8 @@ BRANCH=$5
 CLUSTER_NAME=$6
 DH_USER=$7
 DH_PASS=$8
+AWS_KEY_ID=$9
+AWS_KEY=$10
 
 echo "Waiting for tiller pod to be ready..."
 kubectl wait --for condition=ready pod -l name=tiller --timeout=120s -n kube-system
@@ -46,5 +48,7 @@ until fluxctl sync || [ $ATTEMPTS -eq 120 ]; do
 done
 
 path="${0%/*}"
-./$path/create-secrets.sh $GH_USER $GH_PASS $GH_TOKEN $DEPLOYMENT_REPO $DH_USER $DH_PASS
+./$path/create-secrets.sh $GH_USER $GH_PASS $GH_TOKEN $DEPLOYMENT_REPO $DH_USER $DH_PASS $AWS_KEY_ID $AWS_KEY $CLUSTER_NAME
 
+echo "Syncing..."
+fluxctl sync

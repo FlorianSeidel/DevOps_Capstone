@@ -11,8 +11,8 @@ nodeGroups:
   - name: capstone-prod-workers
     labels: { role: prod-worker }
     instanceType: t2.small
-    desiredCapacity: 2
-    minSize: 2
+    desiredCapacity: 1
+    minSize: 1
     maxSize: 4
     volumeSize: 15
     volumeType: gp2
